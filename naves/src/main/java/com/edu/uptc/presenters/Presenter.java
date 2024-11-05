@@ -1,6 +1,5 @@
 package com.edu.uptc.presenters;
 
-
 import com.edu.uptc.interfaces.ModelInterface;
 import com.edu.uptc.interfaces.PresenterInterface;
 import com.edu.uptc.interfaces.ViewInterface;
@@ -10,9 +9,8 @@ public class Presenter implements PresenterInterface {
     private ViewInterface view;
     private ModelInterface model;
 
+    public Presenter() {
 
-
-    public Presenter(){
     }
 
     @Override
@@ -25,6 +23,12 @@ public class Presenter implements PresenterInterface {
         this.model = model;
     }
 
+    public ModelInterface getModel() {
+        return model;
+    }
 
-    
+    public ViewInterface getView() {
+        return view;
+    }
+
 }

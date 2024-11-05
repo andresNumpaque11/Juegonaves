@@ -9,9 +9,10 @@ public class Game implements ModelInterface {
 
     @Override
     public void setPresenter(PresenterInterface presenter) {
-        this.presenter = presenter;
     }
 
-    
+    public PresenterInterface getPresenter() {
+        return presenter;
+    }
 
 }
