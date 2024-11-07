@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 //import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+
 public class IinitialSettingsGame extends JFrame {
 
     private JLabel numOvnis, timeappeared, velocity, direction;
@@ -63,7 +64,6 @@ public class IinitialSettingsGame extends JFrame {
                 // if (validateFields()) {
                 // setVisible(false);
                 // viewGame.setVisible(true);
-
                 // }
                 setVisible(false);
                 viewGame.setVisible(true);

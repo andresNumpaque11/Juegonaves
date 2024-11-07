@@ -1,8 +1,10 @@
 package com.edu.uptc.views;
 
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,16 +19,23 @@ public class Splash extends JFrame implements ViewInterface {
     private JLabel welcomeLabel;
     private IinitialSettingsGame settingsGame;
     private ViewGame viewGame;
+    private Background background;
+    private ImageIcon fondo;
 
     public Splash() {
-        super("Naves XD");
-        this.setSize(500, 300);
+        super("Ovnis al escape");
+        this.setSize(1280, 720);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
         this.setLocationRelativeTo(null);
     }
 
     private void initComponents() {
+        fondo = new ImageIcon("src/resources/fondoSplash.jpeg");
+        Image backImage = fondo.getImage();
+        background = new Background(backImage);
+        background.setBounds(0, 0, this.getWidth(), this.getHeight());
+        add(background);
         welcomeLabel = new JLabel("Ovnis al escape!!");
         welcomeLabel.setBounds(220, 10, 100, 50);
 
@@ -82,5 +91,6 @@ public class Splash extends JFrame implements ViewInterface {
     public void setpos(int x, int y) {
         viewGame.setPos(x, y);
     }
+
 
 }

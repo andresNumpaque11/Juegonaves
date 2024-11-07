@@ -30,5 +30,13 @@ public class Presenter implements PresenterInterface {
     public ViewInterface getView() {
         return view;
     }
+    public void startGame(){
+        model.startGame(2, 2);
+    }
+
+    @Override
+    public void start() {
+        model.start();
+    }
 
 }

@@ -8,5 +8,6 @@ public interface ViewInterface {
     public int getSpeedOvni();
 
     public void setpos(int x, int y);
+    
 
 }

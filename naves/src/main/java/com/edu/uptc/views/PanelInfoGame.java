@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 public class PanelInfoGame extends JPanel {
 
     public PanelInfoGame() {
-        this.setBackground(Color.decode("#679BDC"));
+        this.setBackground(Color.decode("#000000"));
     }
 
 }

@@ -15,6 +15,7 @@ public class Run {
     public void start() {
         makeMVP();
         view.run();
+        presenter.start();
 
     }
 
