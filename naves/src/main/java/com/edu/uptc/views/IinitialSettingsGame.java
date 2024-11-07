@@ -2,15 +2,21 @@ package com.edu.uptc.views;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 //import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import com.edu.uptc.interfaces.PresenterInterface;
+import com.edu.uptc.interfaces.ViewInterface;
 
-public class IinitialSettingsGame extends JFrame {
 
+public class IinitialSettingsGame extends JFrame implements ViewInterface{
+
+    private PresenterInterface presenter;
     private JLabel numOvnis, timeappeared, velocity, direction;
     private JTextField txtNumOvnis, txtTimeappeared, txtVelocity;
     private JButton startGame, cancel;
@@ -23,7 +29,6 @@ public class IinitialSettingsGame extends JFrame {
         this.setLayout(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
-        this.setVisible(true);
     }
 
     private void initComponents() {
@@ -61,6 +66,7 @@ public class IinitialSettingsGame extends JFrame {
         startGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                presenter.startGame(getTxtNumOvnis(),getTxtTimeappeared(),getTxtVelocity());
                 // if (validateFields()) {
                 // setVisible(false);
                 // viewGame.setVisible(true);
@@ -81,6 +87,22 @@ public class IinitialSettingsGame extends JFrame {
 
         this.add(startGame);
         add(cancel);
+    }
+
+    @Override
+    public void setPresenter(PresenterInterface presenter) {
+        this.presenter = presenter;
+    }
+
+    @Override
+    public void setpos(ArrayList<Integer> xs, ArrayList<Integer> ys) {
+        viewGame.setPos(xs, ys);
+    }
+
+    @Override
+    public void run() {
+        initComponents();
+        this.setVisible(true);
     }
 
     // private boolean validateFields() {
@@ -123,20 +145,25 @@ public class IinitialSettingsGame extends JFrame {
         return direction;
     }
 
-    public JTextField getTxtNumOvnis() {
-        return txtNumOvnis;
+    public int getTxtNumOvnis() {
+        return Integer.parseInt(txtNumOvnis.getText());
     }
 
-    public JTextField getTxtTimeappeared() {
-        return txtTimeappeared;
+    public int getTxtTimeappeared() {
+        return Integer.parseInt(txtTimeappeared.getText());
     }
 
-    public JTextField getTxtVelocity() {
-        return txtVelocity;
+    public int getTxtVelocity() {
+        return Integer.parseInt(txtVelocity.getText());
     }
 
     public ViewGame getViewGame() {
         return viewGame;
+    }
+
+    @Override
+    public int getSpeedOvni() {
+        return 0;
     }
 
 }

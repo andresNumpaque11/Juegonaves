@@ -3,6 +3,7 @@ package com.edu.uptc.views;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -10,15 +11,17 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import com.edu.uptc.interfaces.PresenterInterface;
-import com.edu.uptc.interfaces.ViewInterface;
+import com.edu.uptc.interfaces.ViewMainInterface;
+import com.edu.uptc.models.Coordinates;
 
-public class Splash extends JFrame implements ViewInterface {
 
-    private PresenterInterface presenter;
+
+public class Splash extends JFrame implements ViewMainInterface{
+
+    
     private JButton startGame;
     private JLabel welcomeLabel;
     private IinitialSettingsGame settingsGame;
-    private ViewGame viewGame;
     private Background background;
     private ImageIcon fondo;
 
@@ -28,10 +31,11 @@ public class Splash extends JFrame implements ViewInterface {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
         this.setLocationRelativeTo(null);
+        settingsGame = new IinitialSettingsGame();
     }
 
     private void initComponents() {
-        fondo = new ImageIcon("src/resources/fondoSplash.jpeg");
+        fondo = new ImageIcon("naves/src/resources/fondoSplash.jpeg");
         Image backImage = fondo.getImage();
         background = new Background(backImage);
         background.setBounds(0, 0, this.getWidth(), this.getHeight());
@@ -41,8 +45,6 @@ public class Splash extends JFrame implements ViewInterface {
 
         add(welcomeLabel);
         addButtonStartGame();
-        settingsGame = new IinitialSettingsGame();
-
     }
 
     private void addButtonStartGame() {
@@ -66,31 +68,18 @@ public class Splash extends JFrame implements ViewInterface {
         return settingsGame;
     }
 
-    public PresenterInterface getPresenter() {
-        return presenter;
-    }
-
-    @Override
-    public void setPresenter(PresenterInterface presenter) {
-        this.presenter = presenter;
-    }
-
     @Override
     public void run() {
         initComponents();
         this.setVisible(true);
-
     }
 
     @Override
-    public int getSpeedOvni() {
-        return Integer.parseInt(settingsGame.getTxtVelocity().getText());
+    public void setPresenter(PresenterInterface presenter) {
+        settingsGame.setPresenter(presenter);
     }
-
-    @Override
-    public void setpos(int x, int y) {
-        viewGame.setPos(x, y);
+    public void setPoints(ArrayList<Integer> xs, ArrayList<Integer> ys){
+        settingsGame.setpos(xs,ys);
     }
-
 
 }

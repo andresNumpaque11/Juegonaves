@@ -8,25 +8,43 @@ import com.edu.uptc.interfaces.PresenterInterface;
 public class Game implements ModelInterface {
 
     private PresenterInterface presenter;
-    private Ovni ovni;
     private ArrayList<Ovni> ovnis;
+    private int maxheight;
+    private int maxwidth;
 
-    public Game() {
-        ovni = new Ovni();
+    public Game(int maxheight, int maxwidth) {
+        this.maxheight = maxheight;
+        this.maxwidth = maxwidth;
+        
     }
 
     @Override
-    public void startGame(int numOvnis, int timeappeared) {
-        while (numOvnis > ovnis.size()) {
-            ovnis.add(new Ovni());
-
+    public void startGame(int numOvnis, int timeappeared, int speed) {
+        ovnis = new ArrayList<Ovni>();
+        Thread creationGame = new Thread(() -> {
             try {
-                Thread.sleep(timeappeared * 1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                while (numOvnis > ovnis.size()) {
+                    ovnis.add(new Ovni(maxheight, maxwidth,speed));
+                    Thread.sleep(timeappeared * 1000);
+                }
+            } catch (Exception e) {
             }
-        }
+        });
+        creationGame.start();
+        System.out.println("termine de crear ovnis");
+    }
 
+    public void calculateRefreshOvnis(){
+        for (Ovni ovni : ovnis) {
+            refreshOvni(ovni);
+        }
+    }
+
+    public void refreshOvni(Ovni ovni){
+        Coordinates coordinates = ovni.getCoordinates();
+        double x = coordinates.getX()+ovni.getSpeed()*Math.cos(Math.toRadians(ovni.getAngle()));
+        double y = coordinates.getY()+ovni.getSpeed()*Math.sin(Math.toRadians(ovni.getAngle()));
+        ovni.setCoordinates(new Coordinates((int) x, (int) y));
     }
 
     @Override
@@ -38,11 +56,12 @@ public class Game implements ModelInterface {
     }
 
     @Override
+    public ArrayList<Ovni> getOvnis() {
+        return ovnis;
+    }
+
+    @Override
     public void start() {
-        ovni.start();
-        int x = ovni.getCoordinates().getX();
-        int y = ovni.getCoordinates().getY();
-        System.out.println(x + ", " + y);
 
     }
 

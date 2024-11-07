@@ -4,30 +4,22 @@ import java.util.Random;
 
 public class Ovni extends Thread {
 
-    private Random random;
     private Coordinates coordinates;
     private int speed;
-    private int angle;
+    private double angle;
 
-    public Ovni() {
-        random = new Random();
-        int x = random.nextInt(1280);
-        int y = random.nextInt(720);
+    public Ovni(int maxheight, int maxwidth, int speed) {
+        new Random();
+        int x = new Random().nextInt(maxwidth);
+        int y = new Random().nextInt(maxheight);
         coordinates = new Coordinates(x, y);
-        this.angle = random.nextInt(360);
+        this.angle = new Random().nextInt(360);
+        this.speed = speed;
+
     }
 
     @Override
     public void run() {
-        for (int i = 0; i < 10; i++) {
-            System.out.println("mover a la derecha xd");
-            try {
-                Thread.sleep(3000); // Pausa el hilo actual (ovni) durante 3 segundos
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-                System.out.println("Error en el hilo ovni");
-            }
-        }
     }
 
     public int getSpeed() {
@@ -38,7 +30,7 @@ public class Ovni extends Thread {
         this.speed = speed;
     }
 
-    public int getAngle() {
+    public double getAngle() {
         return angle;
     }
 
@@ -47,6 +39,9 @@ public class Ovni extends Thread {
     }
     public Coordinates getCoordinates() {
         return coordinates;
+    }
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
     }
 
 }

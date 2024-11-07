@@ -2,9 +2,12 @@ package com.edu.uptc.views;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.util.ArrayList;
 
 public class ViewGame extends JFrame {
     private PanelGame panelGame;
@@ -24,7 +27,7 @@ public class ViewGame extends JFrame {
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
-        image = new ImageIcon("src/resources/fondo4.jpg");
+        image = new ImageIcon("naves/src/resources/fondo4.jpg");
         Image background = image.getImage();
         panelGame = new PanelGame(background);
         gbc.gridx = 0;
@@ -45,8 +48,11 @@ public class ViewGame extends JFrame {
 
     }
 
-    public void setPos(int x, int y) {
-        panelGame.getPosOvni().setLocation(x, y);
+    public void setPos(ArrayList<Integer> xs, ArrayList<Integer> ys) {
+            panelGame.setPositions(xs, ys);
+    }
 
+    public void refreshGame() {
+        panelGame.repaint();
     }
 }
