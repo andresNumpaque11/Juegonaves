@@ -12,7 +12,9 @@ public interface ViewMainInterface {
     public int getHeight();
 
     public int getWidth();
+
     public void setPoints(ArrayList<Integer> xs, ArrayList<Integer> ys);
 
     public IinitialSettingsGame getSettingsGame();
+
 }

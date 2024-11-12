@@ -15,7 +15,7 @@ public class Game implements ModelInterface {
     public Game(int maxheight, int maxwidth) {
         this.maxheight = maxheight;
         this.maxwidth = maxwidth;
-        
+
     }
 
     @Override
@@ -24,26 +24,26 @@ public class Game implements ModelInterface {
         Thread creationGame = new Thread(() -> {
             try {
                 while (numOvnis > ovnis.size()) {
-                    ovnis.add(new Ovni(maxheight, maxwidth,speed));
+                    ovnis.add(new Ovni(maxheight, maxwidth, speed));
+                    System.out.println(ovnis.size());
                     Thread.sleep(timeappeared * 1000);
                 }
             } catch (Exception e) {
             }
         });
         creationGame.start();
-        System.out.println("termine de crear ovnis");
     }
 
-    public void calculateRefreshOvnis(){
+    public void calculateRefreshOvnis() {
         for (Ovni ovni : ovnis) {
             refreshOvni(ovni);
         }
     }
 
-    public void refreshOvni(Ovni ovni){
+    public void refreshOvni(Ovni ovni) {
         Coordinates coordinates = ovni.getCoordinates();
-        double x = coordinates.getX()+ovni.getSpeed()*Math.cos(Math.toRadians(ovni.getAngle()));
-        double y = coordinates.getY()+ovni.getSpeed()*Math.sin(Math.toRadians(ovni.getAngle()));
+        double x = coordinates.getX() + ovni.getSpeed() * Math.cos(Math.toRadians(ovni.getAngle()));
+        double y = coordinates.getY() + ovni.getSpeed() * Math.sin(Math.toRadians(ovni.getAngle()));
         ovni.setCoordinates(new Coordinates((int) x, (int) y));
     }
 

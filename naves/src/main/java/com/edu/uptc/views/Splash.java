@@ -12,13 +12,9 @@ import javax.swing.JLabel;
 
 import com.edu.uptc.interfaces.PresenterInterface;
 import com.edu.uptc.interfaces.ViewMainInterface;
-import com.edu.uptc.models.Coordinates;
 
+public class Splash extends JFrame implements ViewMainInterface {
 
-
-public class Splash extends JFrame implements ViewMainInterface{
-
-    
     private JButton startGame;
     private JLabel welcomeLabel;
     private IinitialSettingsGame settingsGame;
@@ -27,11 +23,12 @@ public class Splash extends JFrame implements ViewMainInterface{
 
     public Splash() {
         super("Ovnis al escape");
+        settingsGame = new IinitialSettingsGame();
         this.setSize(1280, 720);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
         this.setLocationRelativeTo(null);
-        settingsGame = new IinitialSettingsGame();
+        addButtonStartGame();
     }
 
     private void initComponents() {
@@ -44,7 +41,7 @@ public class Splash extends JFrame implements ViewMainInterface{
         welcomeLabel.setBounds(220, 10, 100, 50);
 
         add(welcomeLabel);
-        addButtonStartGame();
+        // addButtonStartGame();
     }
 
     private void addButtonStartGame() {
@@ -70,16 +67,17 @@ public class Splash extends JFrame implements ViewMainInterface{
 
     @Override
     public void run() {
-        initComponents();
         this.setVisible(true);
+        initComponents();
     }
 
     @Override
     public void setPresenter(PresenterInterface presenter) {
         settingsGame.setPresenter(presenter);
     }
-    public void setPoints(ArrayList<Integer> xs, ArrayList<Integer> ys){
-        settingsGame.setpos(xs,ys);
+
+    public void setPoints(ArrayList<Integer> xs, ArrayList<Integer> ys) {
+        settingsGame.setpos(xs, ys);
     }
 
 }

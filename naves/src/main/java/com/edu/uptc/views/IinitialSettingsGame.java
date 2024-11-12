@@ -13,8 +13,7 @@ import javax.swing.JTextField;
 import com.edu.uptc.interfaces.PresenterInterface;
 import com.edu.uptc.interfaces.ViewInterface;
 
-
-public class IinitialSettingsGame extends JFrame implements ViewInterface{
+public class IinitialSettingsGame extends JFrame implements ViewInterface {
 
     private PresenterInterface presenter;
     private JLabel numOvnis, timeappeared, velocity, direction;
@@ -66,7 +65,7 @@ public class IinitialSettingsGame extends JFrame implements ViewInterface{
         startGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                presenter.startGame(getTxtNumOvnis(),getTxtTimeappeared(),getTxtVelocity());
+                presenter.startGame(getTxtNumOvnis(), getTxtTimeappeared(), getTxtVelocity());
                 // if (validateFields()) {
                 // setVisible(false);
                 // viewGame.setVisible(true);

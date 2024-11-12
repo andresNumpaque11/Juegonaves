@@ -3,7 +3,6 @@ package com.edu.uptc.views;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
-import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
@@ -21,6 +20,7 @@ public class ViewGame extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setVisible(false);
+
     }
 
     private void initComponents() {
@@ -49,10 +49,14 @@ public class ViewGame extends JFrame {
     }
 
     public void setPos(ArrayList<Integer> xs, ArrayList<Integer> ys) {
-            panelGame.setPositions(xs, ys);
+        panelGame.setPositions(xs, ys);
     }
 
     public void refreshGame() {
         panelGame.repaint();
+    }
+
+    public PanelGame getPanelGame() {
+        return panelGame;
     }
 }

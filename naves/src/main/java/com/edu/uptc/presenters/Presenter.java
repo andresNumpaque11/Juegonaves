@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import com.edu.uptc.interfaces.ModelInterface;
 import com.edu.uptc.interfaces.PresenterInterface;
 import com.edu.uptc.interfaces.ViewMainInterface;
-import com.edu.uptc.models.Coordinates;
 import com.edu.uptc.models.Ovni;
 
 public class Presenter implements PresenterInterface {
@@ -34,8 +33,9 @@ public class Presenter implements PresenterInterface {
     public ViewMainInterface getView() {
         return view;
     }
-    public void startGame(int numOvnis, int timeappeared,int speed){
-        model.startGame(numOvnis, timeappeared,speed);
+
+    public void startGame(int numOvnis, int timeappeared, int speed) {
+        model.startGame(numOvnis, timeappeared, speed);
         Thread hilo = new Thread(() -> {
             try {
                 while (true) {
@@ -48,7 +48,6 @@ public class Presenter implements PresenterInterface {
                         ys.add(ovni.getCoordinates().getY());
                     }
                     view.setPoints(xs, ys);
-                    System.out.println("mueve");
                     Thread.sleep(100);
                 }
             } catch (Exception e) {
@@ -56,8 +55,5 @@ public class Presenter implements PresenterInterface {
         });
         hilo.start();
     }
-   
-
-
 
 }

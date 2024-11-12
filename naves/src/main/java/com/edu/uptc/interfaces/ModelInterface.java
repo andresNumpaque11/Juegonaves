@@ -14,6 +14,5 @@ public interface ModelInterface {
     public void calculateRefreshOvnis();
 
     public ArrayList<Ovni> getOvnis();
-    
 
 }
