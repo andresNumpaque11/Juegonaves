@@ -1,5 +1,6 @@
 package com.edu.uptc.views;
 
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -56,7 +57,7 @@ public class IinitialSettingsGame extends JFrame implements ViewInterface {
         add(txtVelocity);
 
         addButtons();
-        viewGame = new ViewGame();
+        viewGame = new ViewGame(this);
     }
 
     private void addButtons() {
@@ -65,6 +66,7 @@ public class IinitialSettingsGame extends JFrame implements ViewInterface {
         startGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 presenter.startGame(getTxtNumOvnis(), getTxtTimeappeared(), getTxtVelocity());
                 // if (validateFields()) {
                 // setVisible(false);
@@ -72,6 +74,8 @@ public class IinitialSettingsGame extends JFrame implements ViewInterface {
                 // }
                 setVisible(false);
                 viewGame.setVisible(true);
+                setDatas();
+
             }
         });
 
@@ -86,6 +90,16 @@ public class IinitialSettingsGame extends JFrame implements ViewInterface {
 
         this.add(startGame);
         add(cancel);
+    }
+
+    public void updateOvniTrajectory(int index, ArrayList<Point> trajectory) {
+        presenter.updateTrajectory(index, trajectory);
+
+        System.out.println(" mandando datos al modelo");
+    }
+
+    private void setDatas() {
+        viewGame.getPanelInfoGame().setNumMoveOvnis(txtNumOvnis.getText());
     }
 
     @Override

@@ -13,6 +13,8 @@ public interface ModelInterface {
 
     public void calculateRefreshOvnis();
 
+    public void setPositionsOvni();
+
     public ArrayList<Ovni> getOvnis();
 
 }

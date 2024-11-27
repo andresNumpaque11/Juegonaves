@@ -13,9 +13,9 @@ public class ViewGame extends JFrame {
     private PanelInfoGame panelInfoGame;
     private ImageIcon image;
 
-    public ViewGame() {
+    public ViewGame(IinitialSettingsGame iinitialSettingsGame) {
         super("Ovnis al escape");
-        initComponents();
+        initComponents(iinitialSettingsGame);
         this.setSize(1280, 720);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
@@ -23,13 +23,13 @@ public class ViewGame extends JFrame {
 
     }
 
-    private void initComponents() {
+    private void initComponents(IinitialSettingsGame iinitialSettingsGame) {
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
         image = new ImageIcon("naves/src/resources/fondo4.jpg");
         Image background = image.getImage();
-        panelGame = new PanelGame(background);
+        panelGame = new PanelGame(background, iinitialSettingsGame);
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.gridwidth = 1;
@@ -58,5 +58,9 @@ public class ViewGame extends JFrame {
 
     public PanelGame getPanelGame() {
         return panelGame;
+    }
+
+    public PanelInfoGame getPanelInfoGame() {
+        return panelInfoGame;
     }
 }

@@ -41,7 +41,6 @@ public class Splash extends JFrame implements ViewMainInterface {
         welcomeLabel.setBounds(220, 10, 100, 50);
 
         add(welcomeLabel);
-        // addButtonStartGame();
     }
 
     private void addButtonStartGame() {
