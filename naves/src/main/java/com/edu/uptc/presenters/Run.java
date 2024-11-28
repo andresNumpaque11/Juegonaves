@@ -20,7 +20,7 @@ public class Run {
     private void makeMVP() {
         view = new Splash();
         presenter = new Presenter();
-        model = new Game(view.getHeight(), view.getWidth());
+        model = new Game(view.getHeight(), view.getWidth()-300);
 
         model.setPresenter(presenter);
         presenter.setModel(model);

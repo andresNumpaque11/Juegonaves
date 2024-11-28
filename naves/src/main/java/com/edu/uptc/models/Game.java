@@ -25,7 +25,6 @@ public class Game implements ModelInterface {
             try {
                 while (numOvnis > ovnis.size()) {
                     ovnis.add(new Ovni(maxheight, maxwidth, speed));
-                    System.out.println(ovnis.size());
                     Thread.sleep(timeappeared * 1000);
                 }
             } catch (Exception e) {
@@ -34,19 +33,11 @@ public class Game implements ModelInterface {
         creationGame.start();
     }
 
-    public void setPositionsOvni() {
-        System.out.println("setiando posiciones...");
-        for (Ovni ovni : ovnis) {
-            System.out.println(ovni.getCoordinates().getX() + " , " + ovni.getCoordinates().getY());
-        }
-    }
-
     public void calculateRefreshOvnis() {
         ArrayList<Ovni> toRemove = new ArrayList<>();
         for (Ovni ovni : ovnis) {
             refreshOvni(ovni);
             if (isOutOfBounds(ovni)) {
-                System.out.println("ovni eliminado");
                 toRemove.add(ovni);
             }
         }
@@ -83,7 +74,6 @@ public class Game implements ModelInterface {
                 if (isColliding(ovni1, ovni2)) {
                     toRemove.add(ovni1);
                     toRemove.add(ovni2);
-                    System.out.println("2 ovnis chocaron");
                 }
             }
         }

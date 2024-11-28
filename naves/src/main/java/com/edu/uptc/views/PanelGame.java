@@ -22,7 +22,6 @@ public class PanelGame extends JPanel {
     private ArrayList<Integer> ys;
     private ArrayList<Point> pathPoints;
     private ArrayList<Point> trajectory;
-    private int ovniSelected;
     private IinitialSettingsGame iinitialSettingsGame;
 
     public PanelGame(Image backgroundImage, IinitialSettingsGame iinitialSettingsGame) {
@@ -37,14 +36,14 @@ public class PanelGame extends JPanel {
             @Override
             public void mouseDragged(MouseEvent e) {
                 pathPoints.add(e.getPoint());
-                repaint();
             }
         });
         addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent event) {
-                selectOvni(event.getPoint());
-
+            public void mouseReleased(MouseEvent e) {
+                System.out.println("mouse soltado");
+                selectOvni(pathPoints.get(0));
+                pathPoints.clear();
             }
         });
     }
@@ -53,22 +52,18 @@ public class PanelGame extends JPanel {
         for (int i = 0; i < xs.size(); i++) {
             int ovnix = xs.get(i);
             int ovniy = ys.get(i);
-            int diameter = 64;
-            if (Math.abs(clickPoint.getX() - ovnix) <= diameter / 2 &&
-                    Math.abs(clickPoint.getY() - ovniy) <= diameter / 2) {
-                System.out.println("ovni seleccionado en " + ovnix + " ," + ovniy);
-                this.trajectory = new ArrayList<>(pathPoints);
-                ovniSelected = i;
-
+            int diameter = 100;
+            if (Math.abs(clickPoint.getX() - ovnix) <= (diameter / 2) &&
+                    Math.abs(clickPoint.getY() - ovniy) <= (diameter / 2)) {
+                
+                ArrayList<Point> trajectoryCopy = new ArrayList<>(pathPoints);
+                
+                updateOvniTrajectory(i, trajectoryCopy);
                 pathPoints.clear();
-                updateOvniTrajectory(i, trajectory);
-                repaint();
             }
         }
-        System.out.println("accion de click en " + clickPoint.getX() +
-                " , " + clickPoint.getY());
-
     }
+    
 
     public void updateOvniTrajectory(int ovniIndex, ArrayList<Point> trajectory) {
         System.out.println("cambiando trayectoria");
@@ -78,7 +73,9 @@ public class PanelGame extends JPanel {
     public void setPositions(ArrayList<Integer> xs, ArrayList<Integer> ys) {
         this.xs = xs;
         this.ys = ys;
+        repaint();
     }
+    
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -95,7 +92,7 @@ public class PanelGame extends JPanel {
         for (int index = 0; index < xs.size(); index++) {
             imageOvni.paintIcon(this, g, xs.get(index), ys.get(index));
         }
-    }
+    }    
 
     public void paintPlanet(Graphics g) {
         imagePlanet.paintIcon(this, g, this.getWidth() - 128, this.getHeight() - 128);
@@ -112,9 +109,5 @@ public class PanelGame extends JPanel {
 
     public ArrayList<Point> getTrajectory() {
         return trajectory;
-    }
-
-    public int getOvniSelected() {
-        return ovniSelected;
     }
 }

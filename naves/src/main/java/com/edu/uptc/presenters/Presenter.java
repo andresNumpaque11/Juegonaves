@@ -13,6 +13,7 @@ public class Presenter implements PresenterInterface {
 
     private ViewMainInterface view;
     private ModelInterface model;
+    private static final int FRAMETIME = 100;
 
     public Presenter() {
 
@@ -46,12 +47,13 @@ public class Presenter implements PresenterInterface {
                     ArrayList<Integer> xs = new ArrayList<>();
                     ArrayList<Integer> ys = new ArrayList<>();
                     for (Ovni ovni : model.getOvnis()) {
-                        xs.add(ovni.getCoordinates().getX());
-                        ys.add(ovni.getCoordinates().getY());
-                        System.out.println(xs + " , " + ys);
+                        if (!ovni.getIsSelected()) {
+                            xs.add(ovni.getCoordinates().getX());
+                            ys.add(ovni.getCoordinates().getY());
+                        }
                     }
                     view.setPoints(xs, ys);
-                    Thread.sleep(100);
+                    Thread.sleep(FRAMETIME);
 
                 }
             } catch (Exception e) {
@@ -60,18 +62,35 @@ public class Presenter implements PresenterInterface {
         hilo.start();
     }
 
-    public void setPositionsOvni() {
-        model.setPositionsOvni();
-
-    }
-
     public void updateTrajectory(int ovniIndex, ArrayList<Point> trajectory) {
-        ArrayList<Coordinates> coordinates = new ArrayList<>();
-        for (Point point : trajectory) {
-            coordinates.add(new Coordinates((int) point.getX(), (int) point.getY()));
-        }
-        model.getOvnis().get(ovniIndex).setTrajectory(coordinates);
-        System.out.println("se le cambio de trayectoria");
+        Thread hilo = new Thread(() -> {
+            try {
+                model.getOvnis().get(ovniIndex).setIsSelected(true);
+                for (int i = 0; i < trajectory.size(); i ++) {
+                    // Actualiza las coordenadas en el modelo
+                    model.getOvnis().get(ovniIndex)
+                            .setCoordinates(
+                                    new Coordinates((int) trajectory.get(i).getX(), (int) trajectory.get(i).getY()));
+                    
+                    // Obtén todas las posiciones de los OVNIs y notifícalas a la vista
+                    ArrayList<Integer> xs = new ArrayList<>();
+                    ArrayList<Integer> ys = new ArrayList<>();
+                    for (Ovni ovni : model.getOvnis()) {
+                        xs.add(ovni.getCoordinates().getX());
+                        ys.add(ovni.getCoordinates().getY());
+                    }
+                    view.setPoints(xs, ys); // Notifica las nuevas posiciones
+                    view.getSettingsGame().getViewGame().refreshGame(); // Refresca la vista
+    
+                    Thread.sleep(FRAMETIME/4); // Pausa para simular movimiento
+                }
+                model.getOvnis().get(ovniIndex).setIsSelected(false);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        hilo.start();
     }
+    
 
 }

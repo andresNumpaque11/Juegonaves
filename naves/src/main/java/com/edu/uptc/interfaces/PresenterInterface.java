@@ -9,8 +9,6 @@ public interface PresenterInterface {
 
     public void setModel(ModelInterface model);
 
-    public void setPositionsOvni();
-
     public void startGame(int numOvnis, int timeappeared, int speed);
 
     public void updateTrajectory(int ovniIndex, ArrayList<Point> trajectory);

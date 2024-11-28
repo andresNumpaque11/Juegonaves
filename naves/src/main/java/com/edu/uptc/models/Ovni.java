@@ -10,6 +10,7 @@ public class Ovni extends Thread {
     private double angle;
     private ArrayList<Coordinates> trajectory;
     private int trajectoryIndex;
+    private boolean isSelected;
 
     public Ovni(int maxheight, int maxwidth, int speed) {
         new Random();
@@ -20,7 +21,7 @@ public class Ovni extends Thread {
         this.speed = speed;
         this.trajectory = new ArrayList<>();
         this.trajectoryIndex = 0;
-
+        this.isSelected = false;
     }
 
     @Override
@@ -51,11 +52,6 @@ public class Ovni extends Thread {
         this.coordinates = coordinates;
     }
 
-    public void setTrajectory(ArrayList<Coordinates> trajectory) {
-        this.trajectory = trajectory;
-        this.trajectoryIndex = 0;
-    }
-
     public boolean hasTrajectory() {
         return trajectory != null && !trajectory.isEmpty() && trajectoryIndex < trajectory.size();
     }
@@ -67,6 +63,14 @@ public class Ovni extends Thread {
             coordinates.setY(nextCoordinate.getY());
             trajectoryIndex++;
         }
+    }
+
+    public boolean getIsSelected(){
+        return isSelected;
+    }
+
+    public void setIsSelected(boolean isSelected){
+        this.isSelected = isSelected;
     }
 
 }
