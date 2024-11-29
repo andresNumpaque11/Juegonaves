@@ -15,7 +15,7 @@ public class Game implements ModelInterface {
     public Game(int maxheight, int maxwidth) {
         this.maxheight = maxheight;
         this.maxwidth = maxwidth;
-
+        System.out.println("tamaños pantalla"+maxheight+" ancho "+maxwidth);
     }
 
     @Override

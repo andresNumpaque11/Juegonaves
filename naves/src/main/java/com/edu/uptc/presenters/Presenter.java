@@ -98,9 +98,7 @@ public class Presenter implements PresenterInterface {
     }
     private void stopGame(){
        int numOvnis = model.getOvnis().size();
-       System.out.println("numero de ovnis antes del if"+ numOvnis);
        if (numOvnis==0) {
-        System.out.println("numero de ovnis despues del if"+ numOvnis);
         view.getSettingsGame().getViewGame().ejecuteGameOver(true);
         
        } 

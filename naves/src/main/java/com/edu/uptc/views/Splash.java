@@ -20,13 +20,14 @@ public class Splash extends JFrame implements ViewMainInterface {
     private IinitialSettingsGame settingsGame;
     private Background background;
     private ImageIcon fondo;
-    private static final int WIDTH = 885;
-    private static final int HEIGHT = 681;
+    private int WIDTH;
+    private int HEIGHT;
 
-    public Splash() {
+    public Splash(int width, int height) {
         super("Ovnis al escape");
+        this.WIDTH = width;
+        this.HEIGHT = height;
         settingsGame = new IinitialSettingsGame();
-        this.setSize(1280, 720);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
         this.setLocationRelativeTo(null);

@@ -17,7 +17,6 @@ public class ViewGame extends JFrame {
     public ViewGame(IinitialSettingsGame iinitialSettingsGame) {
         super("Ovnis al escape");
         initComponents(iinitialSettingsGame);
-        this.setSize(1280, 720);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setVisible(false);
@@ -49,6 +48,7 @@ public class ViewGame extends JFrame {
         gbc.fill = GridBagConstraints.BOTH;
         add(panelInfoGame, gbc);
         gameOver = new GameOver(iinitialSettingsGame);
+
 
     }
 
