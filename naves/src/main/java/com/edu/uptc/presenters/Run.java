@@ -25,7 +25,7 @@ public class Run {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         view = new Splash((int) screenSize.getWidth(),(int)screenSize.getHeight());
         presenter = new Presenter();
-        model = new Game(view.getPanelHeight(), view.getPanelWidth()-(view.getPanelWidth()/4));
+        model = new Game(view.getPanelHeight()-130, view.getPanelWidth()-((view.getPanelWidth()/3)));
 
         model.setPresenter(presenter);
         presenter.setModel(model);
