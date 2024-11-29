@@ -16,4 +16,7 @@ public interface ModelInterface {
     public ArrayList<Ovni> getOvnis();
     public void collisionWhitchPlanet(int x, int y, int diameter);
 
+    public int getMaxheight();
+    public int getMaxwidth();
+
 }

@@ -21,17 +21,22 @@ public class IinitialSettingsGame extends JFrame implements ViewInterface {
     private JTextField txtNumOvnis, txtTimeappeared, txtVelocity;
     private JButton startGame, cancel;
     private ViewGame viewGame;
+    private int width;
+    private int height;
 
-    public IinitialSettingsGame() {
+
+    public IinitialSettingsGame(int width, int height) {
         super("Configuración de juego");
-        initComponents();
+        this.width = width;
+        this.height = height;
+        initComponents(width,height);
         this.setSize(400, 300);
         this.setLayout(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
     }
 
-    private void initComponents() {
+    private void initComponents(int width, int height) {
         numOvnis = new JLabel("N° de ovnis:");
         numOvnis.setBounds(20, 20, 150, 25);
         add(numOvnis);
@@ -57,7 +62,7 @@ public class IinitialSettingsGame extends JFrame implements ViewInterface {
         add(txtVelocity);
 
         addButtons();
-        viewGame = new ViewGame(this);
+        viewGame = new ViewGame(this, width,  height);
     }
 
     private void addButtons() {
@@ -112,7 +117,7 @@ public class IinitialSettingsGame extends JFrame implements ViewInterface {
 
     @Override
     public void run() {
-        initComponents();
+        initComponents(width,height);
         this.setVisible(true);
     }
 

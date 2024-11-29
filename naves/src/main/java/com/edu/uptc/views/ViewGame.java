@@ -3,8 +3,8 @@ package com.edu.uptc.views;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.util.ArrayList;
 
@@ -14,43 +14,29 @@ public class ViewGame extends JFrame {
     private ImageIcon image;
     private GameOver gameOver;
 
-    public ViewGame(IinitialSettingsGame iinitialSettingsGame) {
+    public ViewGame(IinitialSettingsGame iinitialSettingsGame,int width, int height) {
         super("Ovnis al escape");
         initComponents(iinitialSettingsGame);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLocationRelativeTo(null);
         this.setVisible(false);
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.setSize(width, height);
+        System.out.println(this.getSize().height+"ancho"+this.getSize().getWidth());
         this.setUndecorated(false);
 
     }
 
     private void initComponents(IinitialSettingsGame iinitialSettingsGame) {
-        this.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-
+        this.setLayout(new BorderLayout());
         image = new ImageIcon("naves/src/resources/fondo4.jpg");
         Image background = image.getImage();
         panelGame = new PanelGame(background, iinitialSettingsGame);
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.gridwidth = 1;
-        gbc.weightx = 0.8;
-        gbc.weighty = 0.9;
-        gbc.fill = GridBagConstraints.BOTH;
-        add(panelGame, gbc);
-
+        this.add(panelGame, BorderLayout.CENTER); 
         panelInfoGame = new PanelInfoGame();
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        gbc.weightx = 0.2;
-        gbc.weighty = 0.1;
-        gbc.fill = GridBagConstraints.BOTH;
-        add(panelInfoGame, gbc);
+        panelInfoGame.setPreferredSize(new Dimension(300, 0));
+        this.add(panelInfoGame, BorderLayout.EAST);
         gameOver = new GameOver(iinitialSettingsGame);
-
-
     }
+    
 
     public void setPos(ArrayList<Integer> xs, ArrayList<Integer> ys) {
         panelGame.setPositions(xs, ys);

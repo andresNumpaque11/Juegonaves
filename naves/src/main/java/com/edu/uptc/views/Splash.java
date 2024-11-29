@@ -1,5 +1,6 @@
 package com.edu.uptc.views;
 
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,11 +28,10 @@ public class Splash extends JFrame implements ViewMainInterface {
         super("Ovnis al escape");
         this.WIDTH = width;
         this.HEIGHT = height;
-        settingsGame = new IinitialSettingsGame();
+        settingsGame = new IinitialSettingsGame(width,height);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
-        this.setLocationRelativeTo(null);
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.setSize(width, height);
         this.setUndecorated(false);
         addButtonStartGame();
     }
@@ -41,11 +41,12 @@ public class Splash extends JFrame implements ViewMainInterface {
         Image backImage = fondo.getImage();
         background = new Background(backImage);
         background.setBounds(0, 0, this.getWidth(), this.getHeight());
-        add(background);
         welcomeLabel = new JLabel("Ovnis al escape!!");
-        welcomeLabel.setBounds(220, 10, 100, 50);
-
-        add(welcomeLabel);
+        welcomeLabel.setForeground(Color.white);
+        welcomeLabel.setBounds(0, 0, 800, 300);
+        this.add(welcomeLabel);
+        add(background);
+        repaint();
     }
 
     private void addButtonStartGame() {

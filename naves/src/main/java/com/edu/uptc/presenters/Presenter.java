@@ -45,13 +45,15 @@ public class Presenter implements PresenterInterface {
                 while (true) {
                     view.getSettingsGame().getViewGame().refreshGame();
                     model.calculateRefreshOvnis();
-                    model.collisionWhitchPlanet(757, 553, 128);
+                    model.collisionWhitchPlanet(model.getMaxwidth()-80,model.getMaxheight()-80, 128);
                     ArrayList<Integer> xs = new ArrayList<>();
                     ArrayList<Integer> ys = new ArrayList<>();
                     for (Ovni ovni : model.getOvnis()) {
                         xs.add(ovni.getCoordinates().getX());
                         ys.add(ovni.getCoordinates().getY());
                     }
+                    System.out.println(xs);
+                    System.out.println(ys);
                     view.setPoints(xs, ys);
                     Thread.sleep(FRAMETIME);
                     
@@ -82,7 +84,8 @@ public class Presenter implements PresenterInterface {
                             view.setPoints(xs, ys);
                             view.getSettingsGame().getViewGame().refreshGame();
                             
-                            Thread.sleep(FRAMETIME / 4);
+                            //Thread.sleep(FRAMETIME / 4);
+                            Thread.sleep(10);
                             stopGame();
                     }
                     model.getOvnis().get(ovniIndex).setIsSelected(false);

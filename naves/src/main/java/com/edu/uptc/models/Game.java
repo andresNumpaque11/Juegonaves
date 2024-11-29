@@ -15,7 +15,6 @@ public class Game implements ModelInterface {
     public Game(int maxheight, int maxwidth) {
         this.maxheight = maxheight;
         this.maxwidth = maxwidth;
-        System.out.println("tamaños pantalla"+maxheight+" ancho "+maxwidth);
     }
 
     @Override
@@ -24,11 +23,11 @@ public class Game implements ModelInterface {
         Thread creationGame = new Thread(() -> {
             int f = 0;
             try {
-                while (numOvnis > ovnis.size()) {
+                while (numOvnis > f) {
                     ovnis.add(new Ovni(maxheight, maxwidth, speed));
                     f++;
                     Thread.sleep(timeappeared * 1000);
-                    System.out.println(f+" ovnis creados");
+                    System.out.println("ovni creado "+f);
                 }
             } catch (Exception e) {
             }
@@ -37,15 +36,13 @@ public class Game implements ModelInterface {
     }
 
     public void calculateRefreshOvnis() {
-        ArrayList<Ovni> toRemove = new ArrayList<>();
         for (Ovni ovni : ovnis) {
             refreshOvni(ovni);
             if (isOutOfBounds(ovni)) {
                 System.out.println("ovni fuera del limite");
-                toRemove.add(ovni);
+                ovnis.remove(ovni);
             }
         }
-        ovnis.removeAll(toRemove);
         checkCollisions();
     }
 
@@ -97,22 +94,19 @@ public class Game implements ModelInterface {
     }
 
     public void checkCollisions() {
-        ArrayList<Ovni> toRemove = new ArrayList<>();
-
         for (int i = 0; i < ovnis.size(); i++) {
-            for (int j = i + 1; j < ovnis.size(); j++) {
+            for (int j = 0 ; j < ovnis.size(); j++) {
                 Ovni ovni1 = ovnis.get(i);
                 Ovni ovni2 = ovnis.get(j);
-
-                if (isColliding(ovni1, ovni2)) {
-                    System.out.println("2 ovnis chocaron");
-                    toRemove.add(ovni1);
-                    toRemove.add(ovni2);
+                if (ovni1!=ovni2&&isColliding(ovni1, ovni2)) {
+                    System.out.println("2 ovnis chocaron i:"+i+" j:"+j);
+                    System.out.println("los ovnis a eliminar son "+ovnis.get(i).getCoordinates().getX()+"x"+ovnis.get(i).getCoordinates().getY()
+                    +" y el ovni "+ovnis.get(j).getCoordinates().getX()+"x"+ovnis.get(j).getCoordinates().getY());
+                    ovnis.remove(ovni1);
+                    ovnis.remove(ovni2);
                 }
             }
         }
-
-        ovnis.removeAll(toRemove);
     }
 
     private boolean isColliding(Ovni ovni1, Ovni ovni2) {
@@ -123,7 +117,13 @@ public class Game implements ModelInterface {
                 Math.pow(c2.getX() - c1.getX(), 2) + Math.pow(c2.getY() - c1.getY(), 2));
 
         double collisionDistance = 50;
-        return distance <= collisionDistance;
+        if (distance <= collisionDistance) {
+            System.out.println("distancia "+distance+ " y la colision debe ser "+collisionDistance);
+            return true;
+        } else {
+            return false;
+        }
+        //return distance <= collisionDistance;
     }
 
     @Override
@@ -141,7 +141,13 @@ public class Game implements ModelInterface {
 
     @Override
     public void start() {
+    }
 
+    public int getMaxheight() {
+        return maxheight;
+    }
+    public int getMaxwidth() {
+        return maxwidth;
     }
 
 }

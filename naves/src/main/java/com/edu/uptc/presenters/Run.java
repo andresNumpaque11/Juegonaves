@@ -23,9 +23,9 @@ public class Run {
     private void makeMVP() {
         Toolkit t = Toolkit.getDefaultToolkit();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        view = new Splash((int) screenSize.getWidth(),(int)screenSize.getHeight());
+        view = new Splash((int) screenSize.getWidth(),(int)(screenSize.getHeight()-60));
         presenter = new Presenter();
-        model = new Game(view.getPanelHeight()-130, view.getPanelWidth()-((view.getPanelWidth()/3)));
+        model = new Game(view.getPanelHeight()-100, view.getPanelWidth()-(380));
 
         model.setPresenter(presenter);
         presenter.setModel(model);
