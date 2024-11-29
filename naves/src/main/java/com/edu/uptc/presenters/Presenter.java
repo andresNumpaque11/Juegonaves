@@ -45,66 +45,56 @@ public class Presenter implements PresenterInterface {
                 while (true) {
                     view.getSettingsGame().getViewGame().refreshGame();
                     model.calculateRefreshOvnis();
-                    model.collisionWhitchPlanet(model.getMaxwidth()-80,model.getMaxheight()-80, 128);
+                    model.collisionWhitchPlanet(model.getMaxwidth() - 80, model.getMaxheight() - 80, 128);
                     ArrayList<Integer> xs = new ArrayList<>();
                     ArrayList<Integer> ys = new ArrayList<>();
                     for (Ovni ovni : model.getOvnis()) {
                         xs.add(ovni.getCoordinates().getX());
                         ys.add(ovni.getCoordinates().getY());
                     }
-                    System.out.println(xs);
-                    System.out.println(ys);
                     view.setPoints(xs, ys);
                     Thread.sleep(FRAMETIME);
-                    
+
                 }
             } catch (Exception e) {
+                System.out.println(e+" start game presenter");
             }
         });
         hilo.start();
     }
-    
+
     public void updateTrajectory(int ovniIndex, ArrayList<Point> trajectory) {
-        if (!model.getOvnis().get(ovniIndex).getIsSelected()) {
+        Ovni auxovni = model.getOvnis().get(ovniIndex);
+        if (!auxovni.getIsSelected()) {
+
             Thread hilo = new Thread(() -> {
                 try {
-                    model.getOvnis().get(ovniIndex).setIsSelected(true);
-                    for (int i = 0; i < trajectory.size(); i++) {
-                        model.getOvnis().get(ovniIndex)
-                        .setCoordinates(
-                            new Coordinates((int) trajectory.get(i).getX(),
-                            (int) trajectory.get(i).getY()));
-                            
-                            ArrayList<Integer> xs = new ArrayList<>();
-                            ArrayList<Integer> ys = new ArrayList<>();
-                            for (Ovni ovni : model.getOvnis()) {
-                                xs.add(ovni.getCoordinates().getX());
-                                ys.add(ovni.getCoordinates().getY());
-                            }
-                            view.setPoints(xs, ys);
-                            view.getSettingsGame().getViewGame().refreshGame();
-                            
-                            //Thread.sleep(FRAMETIME / 4);
-                            Thread.sleep(10);
-                            stopGame();
+                    auxovni.setIsSelected(true);
+                    for (Point point : trajectory) {
+                        auxovni.setCoordinates(new Coordinates((int) point.getX(), (int) point.getY()));
+                        view.getSettingsGame().getViewGame().refreshGame();
+                        Thread.sleep(FRAMETIME/4);
+                        stopGame();
                     }
-                    model.getOvnis().get(ovniIndex).setIsSelected(false);
+                    auxovni.setIsSelected(false);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    System.out.println(e.getMessage()+" update trajectory");
                 }
             });
             hilo.start();
         }
     }
-    public void setInfoOvnis(int info){
+
+    public void setInfoOvnis(int info) {
 
     }
-    private void stopGame(){
-       int numOvnis = model.getOvnis().size();
-       if (numOvnis==0) {
-        view.getSettingsGame().getViewGame().ejecuteGameOver(true);
-        
-       } 
+
+    private void stopGame() {
+        int numOvnis = model.getOvnis().size();
+        if (numOvnis == 0) {
+            view.getSettingsGame().getViewGame().ejecuteGameOver(true);
+
+        }
 
     }
 

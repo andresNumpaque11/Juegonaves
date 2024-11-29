@@ -1,6 +1,7 @@
 package com.edu.uptc.models;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.edu.uptc.interfaces.ModelInterface;
 import com.edu.uptc.interfaces.PresenterInterface;
@@ -27,7 +28,7 @@ public class Game implements ModelInterface {
                     ovnis.add(new Ovni(maxheight, maxwidth, speed));
                     f++;
                     Thread.sleep(timeappeared * 1000);
-                    System.out.println("ovni creado "+f);
+                    System.out.println("ovni creado " + f);
                 }
             } catch (Exception e) {
             }
@@ -36,13 +37,15 @@ public class Game implements ModelInterface {
     }
 
     public void calculateRefreshOvnis() {
+        ArrayList<Ovni> toRemove = new ArrayList<>();
         for (Ovni ovni : ovnis) {
             refreshOvni(ovni);
             if (isOutOfBounds(ovni)) {
-                System.out.println("ovni fuera del limite");
-                ovnis.remove(ovni);
+                System.out.println("ovni salio");
+                toRemove.add(ovni);
             }
         }
+        ovnis.removeAll(toRemove);
         checkCollisions();
     }
 
@@ -62,51 +65,58 @@ public class Game implements ModelInterface {
 
     public void collisionWhitchPlanet(int planetX, int planetY, int planetDiameter) {
         ArrayList<Ovni> toRemove = new ArrayList<>();
-    
+
         for (Ovni ovni : ovnis) {
             if (isCollidingWithPlanet(ovni, planetX, planetY, planetDiameter)) {
                 toRemove.add(ovni);
                 System.out.println("Ovni colisionó con el planeta.");
             }
         }
-    
+
         ovnis.removeAll(toRemove);
     }
-    
+
     private boolean isCollidingWithPlanet(Ovni ovni, int planetX, int planetY, int planetDiameter) {
         Coordinates ovniCoordinates = ovni.getCoordinates();
-        int ovniDiameter = 50; 
-    
+        int ovniDiameter = 50;
+
         int ovniCenterX = ovniCoordinates.getX() + ovniDiameter / 2;
         int ovniCenterY = ovniCoordinates.getY() + ovniDiameter / 2;
-    
+
         int planetCenterX = planetX + planetDiameter / 2;
         int planetCenterY = planetY + planetDiameter / 2;
-    
+
         double distance = Math.sqrt(
-                Math.pow(ovniCenterX - planetCenterX, 2) + Math.pow(ovniCenterY - planetCenterY, 2) );
+                Math.pow(ovniCenterX - planetCenterX, 2) + Math.pow(ovniCenterY - planetCenterY, 2));
         return distance <= (ovniDiameter / 2 + planetDiameter / 2);
     }
-    
 
     public void removeOvni(Ovni ovni) {
         ovnis.remove(ovni);
     }
 
     public void checkCollisions() {
+        List<Ovni> toRemove = new ArrayList<>();
+
         for (int i = 0; i < ovnis.size(); i++) {
-            for (int j = 0 ; j < ovnis.size(); j++) {
+            for (int j = i + 1; j < ovnis.size(); j++) {
                 Ovni ovni1 = ovnis.get(i);
                 Ovni ovni2 = ovnis.get(j);
-                if (ovni1!=ovni2&&isColliding(ovni1, ovni2)) {
-                    System.out.println("2 ovnis chocaron i:"+i+" j:"+j);
-                    System.out.println("los ovnis a eliminar son "+ovnis.get(i).getCoordinates().getX()+"x"+ovnis.get(i).getCoordinates().getY()
-                    +" y el ovni "+ovnis.get(j).getCoordinates().getX()+"x"+ovnis.get(j).getCoordinates().getY());
-                    ovnis.remove(ovni1);
-                    ovnis.remove(ovni2);
+                if (ovni1 != ovni2 && isColliding(ovni1, ovni2)) {
+                    System.out.println("2 ovnis chocaron i:" + i + " j:" + j);
+                    System.out.println("Los ovnis a eliminar son " +
+                            ovni1.getCoordinates().getX() + "x" + ovni1.getCoordinates().getY() +
+                            " y el ovni " +
+                            ovni2.getCoordinates().getX() + "x" + ovni2.getCoordinates().getY());
+                    if (!toRemove.contains(ovni1))
+                        toRemove.add(ovni1);
+                    if (!toRemove.contains(ovni2))
+                        toRemove.add(ovni2);
                 }
             }
         }
+
+        ovnis.removeAll(toRemove);
     }
 
     private boolean isColliding(Ovni ovni1, Ovni ovni2) {
@@ -118,12 +128,12 @@ public class Game implements ModelInterface {
 
         double collisionDistance = 50;
         if (distance <= collisionDistance) {
-            System.out.println("distancia "+distance+ " y la colision debe ser "+collisionDistance);
+            System.out.println("distancia " + distance + " y la colision debe ser " + collisionDistance);
             return true;
         } else {
             return false;
         }
-        //return distance <= collisionDistance;
+        // return distance <= collisionDistance;
     }
 
     @Override
@@ -146,6 +156,7 @@ public class Game implements ModelInterface {
     public int getMaxheight() {
         return maxheight;
     }
+
     public int getMaxwidth() {
         return maxwidth;
     }
