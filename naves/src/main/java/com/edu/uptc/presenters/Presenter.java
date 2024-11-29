@@ -54,6 +54,7 @@ public class Presenter implements PresenterInterface {
                     }
                     view.setPoints(xs, ys);
                     Thread.sleep(FRAMETIME);
+                    stopGame();
 
                 }
             } catch (Exception e) {
