@@ -12,10 +12,12 @@ public class Game implements ModelInterface {
     private ArrayList<Ovni> ovnis;
     private int maxheight;
     private int maxwidth;
+    private int countOvnis;
 
     public Game(int maxheight, int maxwidth) {
         this.maxheight = maxheight;
         this.maxwidth = maxwidth;
+        countOvnis = 0;
     }
 
     @Override
@@ -27,6 +29,7 @@ public class Game implements ModelInterface {
                 while (numOvnis > f) {
                     ovnis.add(new Ovni(maxheight, maxwidth, speed));
                     f++;
+                    countOvnis = f;
                     Thread.sleep(timeappeared * 1000);
                     System.out.println("ovni creado " + f);
                 }
@@ -34,6 +37,14 @@ public class Game implements ModelInterface {
             }
         });
         creationGame.start();
+    }
+
+    public int getCountOvnis(){
+        return countOvnis;
+    }
+    
+    public void setCountOvnis(int countOvnis) {
+        this.countOvnis = countOvnis;
     }
 
     public void calculateRefreshOvnis() {
@@ -133,7 +144,6 @@ public class Game implements ModelInterface {
         } else {
             return false;
         }
-        // return distance <= collisionDistance;
     }
 
     @Override

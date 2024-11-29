@@ -48,6 +48,7 @@ public class GameOver extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 settingsGame.getViewGame().setVisible(false);
                 settingsGame.setVisible(true);
+                setVisible(false);
             }
         });
         mainPanel.add(toMenuButton);

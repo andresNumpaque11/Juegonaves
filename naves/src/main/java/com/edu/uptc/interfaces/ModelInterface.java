@@ -18,5 +18,7 @@ public interface ModelInterface {
 
     public int getMaxheight();
     public int getMaxwidth();
+    public int getCountOvnis();
+    public void setCountOvnis(int countOvnis);
 
 }

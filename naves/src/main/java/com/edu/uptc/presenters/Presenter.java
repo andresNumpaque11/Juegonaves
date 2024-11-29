@@ -92,9 +92,9 @@ public class Presenter implements PresenterInterface {
 
     private void stopGame() {
         int numOvnis = model.getOvnis().size();
-        if (numOvnis == 0) {
+        if (numOvnis == 0 && model.getCountOvnis()!=0&&model.getCountOvnis()==view.getSettingsGame().getTxtNumOvnis()) {
             view.getSettingsGame().getViewGame().ejecuteGameOver(true);
-
+            model.setCountOvnis(0);
         }
 
     }
