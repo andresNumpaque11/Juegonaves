@@ -22,10 +22,13 @@ public class Game implements ModelInterface {
     public void startGame(int numOvnis, int timeappeared, int speed) {
         ovnis = new ArrayList<Ovni>();
         Thread creationGame = new Thread(() -> {
+            int f = 0;
             try {
                 while (numOvnis > ovnis.size()) {
                     ovnis.add(new Ovni(maxheight, maxwidth, speed));
+                    f++;
                     Thread.sleep(timeappeared * 1000);
+                    System.out.println(f+" ovnis creados");
                 }
             } catch (Exception e) {
             }
@@ -38,6 +41,7 @@ public class Game implements ModelInterface {
         for (Ovni ovni : ovnis) {
             refreshOvni(ovni);
             if (isOutOfBounds(ovni)) {
+                System.out.println("ovni fuera del limite");
                 toRemove.add(ovni);
             }
         }
@@ -59,6 +63,35 @@ public class Game implements ModelInterface {
         ovni.setCoordinates(new Coordinates((int) x, (int) y));
     }
 
+    public void collisionWhitchPlanet(int planetX, int planetY, int planetDiameter) {
+        ArrayList<Ovni> toRemove = new ArrayList<>();
+    
+        for (Ovni ovni : ovnis) {
+            if (isCollidingWithPlanet(ovni, planetX, planetY, planetDiameter)) {
+                toRemove.add(ovni);
+                System.out.println("Ovni colisionó con el planeta.");
+            }
+        }
+    
+        ovnis.removeAll(toRemove);
+    }
+    
+    private boolean isCollidingWithPlanet(Ovni ovni, int planetX, int planetY, int planetDiameter) {
+        Coordinates ovniCoordinates = ovni.getCoordinates();
+        int ovniDiameter = 50; 
+    
+        int ovniCenterX = ovniCoordinates.getX() + ovniDiameter / 2;
+        int ovniCenterY = ovniCoordinates.getY() + ovniDiameter / 2;
+    
+        int planetCenterX = planetX + planetDiameter / 2;
+        int planetCenterY = planetY + planetDiameter / 2;
+    
+        double distance = Math.sqrt(
+                Math.pow(ovniCenterX - planetCenterX, 2) + Math.pow(ovniCenterY - planetCenterY, 2) );
+        return distance <= (ovniDiameter / 2 + planetDiameter / 2);
+    }
+    
+
     public void removeOvni(Ovni ovni) {
         ovnis.remove(ovni);
     }
@@ -72,6 +105,7 @@ public class Game implements ModelInterface {
                 Ovni ovni2 = ovnis.get(j);
 
                 if (isColliding(ovni1, ovni2)) {
+                    System.out.println("2 ovnis chocaron");
                     toRemove.add(ovni1);
                     toRemove.add(ovni2);
                 }

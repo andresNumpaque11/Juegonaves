@@ -41,7 +41,6 @@ public class PanelGame extends JPanel {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
-                System.out.println("mouse soltado");
                 selectOvni(pathPoints.get(0));
                 pathPoints.clear();
             }
@@ -62,11 +61,10 @@ public class PanelGame extends JPanel {
                 pathPoints.clear();
             }
         }
-    }
+    }   
     
 
     public void updateOvniTrajectory(int ovniIndex, ArrayList<Point> trajectory) {
-        System.out.println("cambiando trayectoria");
         iinitialSettingsGame.updateOvniTrajectory(ovniIndex, trajectory);
     }
 
@@ -96,6 +94,12 @@ public class PanelGame extends JPanel {
 
     public void paintPlanet(Graphics g) {
         imagePlanet.paintIcon(this, g, this.getWidth() - 128, this.getHeight() - 128);
+    }
+    public int getXplanet(){
+        return this.getWidth()-128;
+    }
+    public int getYplanet(){
+        return this.getHeight()-128;
     }
 
     private void paintPath(Graphics g) {

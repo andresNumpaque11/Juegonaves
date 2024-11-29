@@ -17,4 +17,7 @@ public interface ViewMainInterface {
 
     public IinitialSettingsGame getSettingsGame();
 
+    public int getPanelWidth();
+    public int getPanelHeight();
+
 }

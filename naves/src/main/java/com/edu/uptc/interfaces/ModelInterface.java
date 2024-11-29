@@ -14,5 +14,6 @@ public interface ModelInterface {
     public void calculateRefreshOvnis();
 
     public ArrayList<Ovni> getOvnis();
+    public void collisionWhitchPlanet(int x, int y, int diameter);
 
 }

@@ -39,58 +39,72 @@ public class Presenter implements PresenterInterface {
 
     public void startGame(int numOvnis, int timeappeared, int speed) {
         model.startGame(numOvnis, timeappeared, speed);
+
         Thread hilo = new Thread(() -> {
             try {
                 while (true) {
                     view.getSettingsGame().getViewGame().refreshGame();
                     model.calculateRefreshOvnis();
-                    ArrayList<Integer> xs = new ArrayList<>();
-                    ArrayList<Integer> ys = new ArrayList<>();
-                    for (Ovni ovni : model.getOvnis()) {
-                        if (!ovni.getIsSelected()) {
-                            xs.add(ovni.getCoordinates().getX());
-                            ys.add(ovni.getCoordinates().getY());
-                        }
-                    }
-                    view.setPoints(xs, ys);
-                    Thread.sleep(FRAMETIME);
-
-                }
-            } catch (Exception e) {
-            }
-        });
-        hilo.start();
-    }
-
-    public void updateTrajectory(int ovniIndex, ArrayList<Point> trajectory) {
-        Thread hilo = new Thread(() -> {
-            try {
-                model.getOvnis().get(ovniIndex).setIsSelected(true);
-                for (int i = 0; i < trajectory.size(); i ++) {
-                    // Actualiza las coordenadas en el modelo
-                    model.getOvnis().get(ovniIndex)
-                            .setCoordinates(
-                                    new Coordinates((int) trajectory.get(i).getX(), (int) trajectory.get(i).getY()));
-                    
-                    // Obtén todas las posiciones de los OVNIs y notifícalas a la vista
+                    model.collisionWhitchPlanet(757, 553, 128);
                     ArrayList<Integer> xs = new ArrayList<>();
                     ArrayList<Integer> ys = new ArrayList<>();
                     for (Ovni ovni : model.getOvnis()) {
                         xs.add(ovni.getCoordinates().getX());
                         ys.add(ovni.getCoordinates().getY());
                     }
-                    view.setPoints(xs, ys); // Notifica las nuevas posiciones
-                    view.getSettingsGame().getViewGame().refreshGame(); // Refresca la vista
-    
-                    Thread.sleep(FRAMETIME/4); // Pausa para simular movimiento
+                    view.setPoints(xs, ys);
+                    Thread.sleep(FRAMETIME);
+                    
                 }
-                model.getOvnis().get(ovniIndex).setIsSelected(false);
             } catch (Exception e) {
-                e.printStackTrace();
             }
         });
         hilo.start();
     }
     
+    public void updateTrajectory(int ovniIndex, ArrayList<Point> trajectory) {
+        if (!model.getOvnis().get(ovniIndex).getIsSelected()) {
+            Thread hilo = new Thread(() -> {
+                try {
+                    model.getOvnis().get(ovniIndex).setIsSelected(true);
+                    for (int i = 0; i < trajectory.size(); i++) {
+                        model.getOvnis().get(ovniIndex)
+                        .setCoordinates(
+                            new Coordinates((int) trajectory.get(i).getX(),
+                            (int) trajectory.get(i).getY()));
+                            
+                            ArrayList<Integer> xs = new ArrayList<>();
+                            ArrayList<Integer> ys = new ArrayList<>();
+                            for (Ovni ovni : model.getOvnis()) {
+                                xs.add(ovni.getCoordinates().getX());
+                                ys.add(ovni.getCoordinates().getY());
+                            }
+                            view.setPoints(xs, ys);
+                            view.getSettingsGame().getViewGame().refreshGame();
+                            
+                            Thread.sleep(FRAMETIME / 4);
+                            stopGame();
+                    }
+                    model.getOvnis().get(ovniIndex).setIsSelected(false);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+            hilo.start();
+        }
+    }
+    public void setInfoOvnis(int info){
+
+    }
+    private void stopGame(){
+       int numOvnis = model.getOvnis().size();
+       System.out.println("numero de ovnis antes del if"+ numOvnis);
+       if (numOvnis==0) {
+        System.out.println("numero de ovnis despues del if"+ numOvnis);
+        view.getSettingsGame().getViewGame().ejecuteGameOver(true);
+        
+       } 
+
+    }
 
 }

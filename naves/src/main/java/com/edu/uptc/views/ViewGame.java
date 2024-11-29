@@ -12,6 +12,7 @@ public class ViewGame extends JFrame {
     private PanelGame panelGame;
     private PanelInfoGame panelInfoGame;
     private ImageIcon image;
+    private GameOver gameOver;
 
     public ViewGame(IinitialSettingsGame iinitialSettingsGame) {
         super("Ovnis al escape");
@@ -20,6 +21,8 @@ public class ViewGame extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setVisible(false);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.setUndecorated(false);
 
     }
 
@@ -45,11 +48,15 @@ public class ViewGame extends JFrame {
         gbc.weighty = 0.1;
         gbc.fill = GridBagConstraints.BOTH;
         add(panelInfoGame, gbc);
+        gameOver = new GameOver(iinitialSettingsGame);
 
     }
 
     public void setPos(ArrayList<Integer> xs, ArrayList<Integer> ys) {
         panelGame.setPositions(xs, ys);
+    }
+    public  void ejecuteGameOver(boolean b){
+        gameOver.setVisible(b);
     }
 
     public void refreshGame() {

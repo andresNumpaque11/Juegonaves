@@ -93,7 +93,6 @@ public class IinitialSettingsGame extends JFrame implements ViewInterface {
     }
 
     public void updateOvniTrajectory(int index, ArrayList<Point> trajectory) {
-        System.out.println("llevando arreglo "+index+" tamaño "+ trajectory.size());
         presenter.updateTrajectory(index, trajectory);
     }
 

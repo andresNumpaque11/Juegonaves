@@ -20,6 +20,8 @@ public class Splash extends JFrame implements ViewMainInterface {
     private IinitialSettingsGame settingsGame;
     private Background background;
     private ImageIcon fondo;
+    private static final int WIDTH = 885;
+    private static final int HEIGHT = 681;
 
     public Splash() {
         super("Ovnis al escape");
@@ -28,6 +30,8 @@ public class Splash extends JFrame implements ViewMainInterface {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
         this.setLocationRelativeTo(null);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.setUndecorated(false);
         addButtonStartGame();
     }
 
@@ -77,6 +81,16 @@ public class Splash extends JFrame implements ViewMainInterface {
 
     public void setPoints(ArrayList<Integer> xs, ArrayList<Integer> ys) {
         settingsGame.setpos(xs, ys);
+    }
+
+    @Override
+    public int getPanelWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public int getPanelHeight() {
+        return HEIGHT;
     }
 
 }
